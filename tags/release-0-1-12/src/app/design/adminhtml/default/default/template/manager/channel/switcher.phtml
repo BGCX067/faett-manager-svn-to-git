@@ -1,0 +1,72 @@
+<?php
+/**
+ * NOTICE OF LICENSE
+ * 
+ * Faett_Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Faett_Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Faett_Manager.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Faett_Manager to newer
+ * versions in the future. If you wish to customize Faett_Manager for your
+ * needs please refer to http://www.faett.net for more information.
+ *
+ * @category   Faett
+ * @package    Faett_Manager
+ * @copyright  Copyright (c) 2009 <tw@faett.net> Tim Wagner
+ * @license    <http://www.gnu.org/licenses/> 
+ * 			   GNU General Public License (GPL 3)
+ */
+?>
+<?php if ($channels = $this->getChannels()): ?>
+<?php if (count($channels->getItems()) > 1): ?>
+<div class="switcher package-installer">
+	<div class="left">
+		<label for="channel_switcher"><?php echo $this->__('Choose Channel') ?>:</label>
+		<select name="channel_switcher" id="channel_switcher" class="left-col-block" onchange="return switchChannel(this);">
+		<?php if ($this->hasDefaultOption()): ?>
+		    <option value="-1"><?php echo $this->getDefaultChannelName() ?></option>
+		<?php endif; ?>
+		    <?php foreach ($channels as $channel): ?>
+		    <option value="<?php echo $channel->getId() ?>"<?php if($this->getChannelId() == $channel->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $channel->getAlias() ?></option>
+		    <?php endforeach; ?>
+		</select>
+	</div>
+	<?php if ((int)$this->getChannelId() > 0):?>
+		<div class="right">
+			<form id="manualPackageForm" action="<?php echo $this->getUrl('*/*/manualInstall');?>" onsubmit="$('loading-mask').show();">
+				<input type="hidden" value="<?php echo $this->getChannelId() ?>" name="channel_id" />
+				<div class="left input-box">
+					<label for="package_name"><?php echo $this->__('Install Package manually') ?>:</label>
+					<div class="package-input right">
+						<input class="required-entry" name="package_name" type="text" style="width:200px"/>
+					</div>
+				</div>
+				<button type="submit" class="button"><?php echo $this->__('install') ?></button>
+			</form>
+		</div>
+	<?php endif;?>
+</div>
+
+<script type="text/javascript">
+	var manualPackageForm = new varienForm('manualPackageForm', '');
+    function switchChannel(obj){
+        var channelParam = obj.value ? 'channel/'+obj.value + '/' : '';
+        if(obj.switchParams){
+            channelParam+= obj.switchParams;
+        }
+        setLocation('<?php echo $this->getSwitchUrl() ?>'+channelParam);
+    }
+</script>
+<?php endif; ?>
+<?php endif; ?>

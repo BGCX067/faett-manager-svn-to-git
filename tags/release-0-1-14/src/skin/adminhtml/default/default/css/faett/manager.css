@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+.package-input {
+	padding: 0 5px;
+}
+
+.package-installer {
+	overflow: hidden;
+}
+
+.console-msg {
+	background: none repeat scroll 0 0 #666E73;
+	color: white;
+	border:1px solid black !important;
+}
+@CHARSET "UTF-8";
+
+.package-input {
+	padding: 0 5px;
+}
+
+.package-installer {
+	overflow: hidden;
+}
+
+.product-img-box {
+	float: left;
+	width: 267px;
+}
+
+.product-img-box .product-image-zoom {
+	position: relative;
+	overflow: hidden;
+	width: 265px;
+	height: 265px;
+	z-index: 9;
+}
+
+.product-img-box .product-image-zoom img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	cursor: move;
+}
+
+.image-zoom {
+	position: relative;
+	z-index: 9;
+	height: 18px;
+	margin: 0 auto 13px auto;
+	background: url(../images/faett/manager/slider_bg.gif) no-repeat 50% 50%;
+	padding: 0 28px 0 28px;
+	cursor: pointer;
+}

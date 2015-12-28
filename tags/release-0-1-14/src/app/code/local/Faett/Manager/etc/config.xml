@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!--
+ *
+ * NOTICE OF LICENSE
+ * 
+ * Faett_Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Faett_Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Faett_Manager.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Faett_Manager to newer
+ * versions in the future. If you wish to customize Faett_Manager for your
+ * needs please refer to http://www.faett.net for more information.
+ *
+ * @category   Faett
+ * @package    Faett_Manager
+ * @copyright  Copyright (c) 2009 <tw@faett.net> Tim Wagner
+ * @license    <http://www.gnu.org/licenses/> 
+ * 			   GNU General Public License (GPL 3)
+-->
+<config>
+    <modules>
+        <Faett_Manager>
+            <version>${version}</version>
+        </Faett_Manager>
+    </modules>
+    <admin>
+        <routers>
+			<manager>
+				<use>admin</use>
+				<args>
+					<module>Faett_Manager</module>
+					<frontName>manager</frontName>
+				</args>
+			</manager>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<manager module="manager" translate="title">
+				<title>900.menue.title</title>
+				<sort_order>71</sort_order>            
+				<children>
+					<channels module="manager" translate="title">
+						<title>900.menue.child.manage-channels</title>
+						<sort_order>1</sort_order>
+						<action>manager/adminhtml_channel</action>
+					</channels>
+					<packages module="manager" translate="title">
+						<title>900.menue.child.manage-packages</title>
+						<sort_order>2</sort_order>
+						<action>manager/adminhtml_package</action>
+					</packages>
+				</children>
+			</manager>
+		</menu>
+        <translate>
+            <modules>
+                <Faett_Manager>
+                    <files>
+                        <default>Faett_Manager.csv</default>
+                    </files>
+                </Faett_Manager>
+            </modules>
+        </translate>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Faett_Manager>
+							<title>Package Manager</title>
+							<sort_order>10</sort_order>
+						</Faett_Manager>
+					</children>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<manager translate="title" module="manager">
+											<title>Manager</title>
+											<sort_order>20</sort_order>
+										</manager>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<manager>
+					<file>manager.xml</file>
+				</manager>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <manager>
+                <class>Faett_Manager_Model</class>
+                <resourceModel>manager_mysql4</resourceModel>
+            </manager>
+            <manager_mysql4>
+                <class>Faett_Manager_Model_Mysql4</class>
+                <entities>
+                    <channel>
+                        <table>faett_channel</table>
+                    </channel>
+                    <package>
+                        <table>faett_package</table>
+                    </package>
+                    <release>
+                        <table>faett_release</table>
+                    </release>
+                    <resource>
+                        <table>core_resource</table>
+                    </resource>
+                </entities>
+            </manager_mysql4>            
+            <adminhtml>
+                <rewrite>
+                    <session>Faett_Manager_Model_Session</session>
+                </rewrite>
+            </adminhtml>           
+            <core>
+                <rewrite>
+                    <message>Faett_Manager_Model_Message</message>
+                </rewrite>
+            </core>
+        </models>
+        <resources>
+            <manager_setup>
+                <setup>
+                    <module>Faett_Manager</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </manager_setup>
+            <manager_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </manager_write>
+            <manager_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </manager_read>
+        </resources>
+        <blocks>
+            <manager>
+                <class>Faett_Manager_Block</class>
+            </manager>
+            <core>
+		        <rewrite>
+		            <messages>Faett_Manager_Block_Messages</messages>
+		        </rewrite>
+		    </core>
+        </blocks>
+        <helpers>
+            <manager>
+                <class>Faett_Manager_Helper</class>
+            </manager>
+        </helpers>
+    </global>
+</config>
